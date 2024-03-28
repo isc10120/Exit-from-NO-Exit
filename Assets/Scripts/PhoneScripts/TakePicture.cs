@@ -1,35 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
+using UnityEngine.UI;
 
-public class TakePicture : MonoBehaviour
+public class TakePicture : MonoBehaviour  // WorldToScreenPoint로 증거 오브젝트 인식하는 기능 추가하기
 {
     public bool _willTakeScreenShot = false;
-    private string FolderPath = $"{Application.dataPath}/ScreenShots/";
-    private string TotalPath;
     Texture2D screenTex;
     Rect area;
 
     void Awake(){
-        screenTex = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        area = new Rect(0f, 0f, Screen.width, Screen.height);
+        screenTex = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
+        area = new Rect(0f, 0f, 1920f, 1080f);
     }
 
     private void OnPostRender(){
         if (_willTakeScreenShot)
         {
-            int num = PhoneController.instance.NumOfScreenShots;
             _willTakeScreenShot = false;
             screenTex.ReadPixels(area, 0, 0);
 
-            if (Directory.Exists(FolderPath) == false){
-                Directory.CreateDirectory(FolderPath);
-            }
-            TotalPath = string.Copy(FolderPath) + "ScreenShot_" + num.ToString();
-            File.WriteAllBytes(TotalPath, screenTex.EncodeToPNG());
+            CameraController.instance.SaveTemporary(screenTex.EncodeToPNG());
             
-            PrintImage.instance.PrintScreenshot(num);
         }
     }
 }

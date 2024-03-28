@@ -8,7 +8,8 @@ public class PhoneController : MonoBehaviour
     private Stack<GameObject> TabStack;
     public GameObject ChocoTalk;
     public GameObject Allbum;
-    public int NumOfScreenShots = 1;
+    public int NumOfScreenShots = 1;  
+    // GameManager로 옮기기, 세이브 시 같이 저장하되 로드 시 원래 값과 비교하여 더 큰 수로 적용!!
 
     void Awake(){
         if(instance == null){
@@ -33,10 +34,5 @@ public class PhoneController : MonoBehaviour
     
     public void ActiveChocoTalk(){
         ActiveTab(ChocoTalk);
-    }
-    
-    public void TakeScreenShotAndUpload(){ // 카메라로 옮길 코드
-        //NumOfScreenShots++;
-        GameObject.Find("Main Camera").GetComponent<TakePicture>()._willTakeScreenShot = true;
     }
 }
