@@ -5,9 +5,12 @@ using UnityEngine;
 public class PhoneController : MonoBehaviour
 {
     public static PhoneController instance;
-    private Stack<GameObject> TabStack;
+    public GameObject Phone;
     public GameObject ChocoTalk;
-    public GameObject Allbum;
+    public GameObject Gallery;
+    public GameObject Map;
+    public GameObject Dgram;
+    private Stack<GameObject> TabStack;
     public int NumOfScreenShots = 1;  
     // GameManager로 옮기기, 세이브 시 같이 저장하되 로드 시 원래 값과 비교하여 더 큰 수로 적용!!
 
@@ -16,6 +19,11 @@ public class PhoneController : MonoBehaviour
             instance = this;
             TabStack = new Stack<GameObject>();
         }
+    }
+
+    public void ActivePhone(){
+        Phone.SetActive(true);
+        // UI 숨기기
     }
     public void ActiveTab(GameObject tab){
         TabStack.Push(tab);
@@ -35,4 +43,15 @@ public class PhoneController : MonoBehaviour
     public void ActiveChocoTalk(){
         ActiveTab(ChocoTalk);
     }
+
+    public void ActiveGallery(){
+        ActiveTab(Gallery);
+    }
+    public void ActivMap(){
+        ActiveTab(Map);
+    }
+    public void ActiveDgram(){
+        ActiveTab(Dgram);
+    }
+
 }
